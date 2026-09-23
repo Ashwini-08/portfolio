@@ -178,6 +178,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
         <button class="chip" type="button">What have you shipped to production?</button>
         <button class="chip" type="button">Agents and MCP</button>
         <button class="chip" type="button">SQL and data pipelines</button>
+        <button class="chip" type="button">NLP and machine learning</button>
       </div>
       <p class="status" id="status" aria-live="polite"></p>
       <ol class="results" id="results"></ol>
@@ -190,7 +191,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
   <div class="wrap sec-head">
     <div>
       <h2 class="sec">Experience</h2>
-      <p class="sec-note">From enterprise data in Mumbai to agentic AI in production.</p>
+      <p class="sec-note">From NLP and enterprise data to agentic AI in production.</p>
     </div>
     <ol class="roles" id="roles">
       <li class="role">
@@ -219,6 +220,17 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
         </div>
       </li>
       <li class="role">
+        <div class="when">Aug – Dec 2025</div>
+        <div>
+          <h3>Graduate Teaching Assistant, Database Systems</h3>
+          <p class="org">University of Colorado Boulder</p>
+          <ul>
+            <li>Mentored graduate students through database systems coursework, improving their independent problem-solving skills.</li>
+            <li>Reviewed and evaluated student work, providing structured feedback that improved code quality and query design.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
         <div class="when">Jun – Aug 2025</div>
         <div>
           <h3>Technical Intern, Data Validation &amp; Reporting</h3>
@@ -231,14 +243,36 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
         </div>
       </li>
       <li class="role">
+        <div class="when">Apr – Jun 2025</div>
+        <div>
+          <h3>Student Assistant II, Machine Learning</h3>
+          <p class="org">University of Colorado Boulder</p>
+          <ul>
+            <li>Assisted a professor in developing machine learning course content for a Coursera specialization, turning complex ML concepts into clear, structured, learner-ready material.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
         <div class="when">Sep 2022 – May 2024</div>
         <div>
           <h3>Data Analyst, Enterprise Data &amp; CRM Analytics</h3>
-          <p class="org">BusinessNext, India</p>
+          <p class="org">BusinessNext</p>
           <ul>
             <li>Analyzed enterprise CRM datasets across 10+ business domains using SQL Server, Oracle, and MDM to support data migration and operational reporting.</li>
             <li>Developed automated data transformation and reporting pipelines using SQL, stored procedures, and relational databases, improving reporting efficiency and application performance by 40%.</li>
             <li>Established data validation, monitoring, and quality assurance workflows using SQL and production log analysis, improving data reliability across enterprise reporting systems.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
+        <div class="when">Jun – Dec 2021</div>
+        <div>
+          <h3>Data Science Intern</h3>
+          <p class="org">Montran</p>
+          <ul>
+            <li>Designed an NLP-based text summarization system with spaCy tokenization and lemmatization, condensing multi-page financial reports into structured, reviewer-ready summaries.</li>
+            <li>Applied TF-IDF vectorization to convert unstructured financial text into structured numerical features.</li>
+            <li>Developed a repeatable text-processing pipeline in Python, speeding extraction of key insights from financial documentation.</li>
           </ul>
         </div>
       </li>
@@ -376,7 +410,15 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     test: ["testing","validation","integration","qa","uat"],
     python: ["fastapi","panda"],
     reliability: ["guardrail","logging","health","monitoring","validation"],
-    guardrail: ["guardrail","secure","controlled","validation"]
+    guardrail: ["guardrail","secure","controlled","validation"],
+    nlp: ["spacy","tf","idf","summarization","text","lemmatization","tokenization"],
+    text: ["nlp","spacy","summarization","tf","idf"],
+    ml: ["machine","learning","tf","idf","nlp"],
+    machine: ["ml","learning","nlp","tf","idf"],
+    teach: ["mentor","student","course","feedback","teaching"],
+    teaching: ["mentor","student","course","feedback"],
+    mentor: ["student","course","feedback","mentor"],
+    financial: ["financial","report","documentation"]
   };
 
   const docs = chunks.map(c => { const t = tokens(c.text); const tf = {}; t.forEach(x => tf[x] = (tf[x]||0)+1); return { ...c, tf, len: t.length }; });
@@ -433,10 +475,11 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
 
   /* ---------- Skills → evidence in experience ---------- */
   const SKILLS = {
-    "AI & LLM": [["Claude",["claude"]],["Claude Agent SDK",["claude agent sdk"]],["MCP",["mcp"]],["LangGraph",["langgraph"]],["LangChain",["langchain"]],["RAG",["rag","retrieval"]],["Semantic search & pgvector",["semantic","pgvector"]],["Prompt engineering",["prompt","few-shot"]],["GEPA",["gepa"]],["LLM-as-a-Judge (MQM)",["llm-as-a-judge","mqm"]],["Vertex AI",["vertex ai"]],["Gemini",["gemini"]],["OpenAI GPT",["openai gpt"]]],
+    "AI & LLM": [["Claude",["claude"]],["Claude Agent SDK",["claude agent sdk"]],["MCP",["mcp"]],["LangGraph",["langgraph"]],["LangChain",["langchain"]],["RAG",["rag","retrieval"]],["Semantic search & pgvector",["semantic","pgvector"]],["Prompt engineering",["prompt","few-shot"]],["GEPA",["gepa"]],["LLM-as-a-Judge (MQM)",["llm-as-a-judge","mqm"]],["Vertex AI",["vertex ai"]],["Gemini",["gemini"]],["OpenAI GPT",["openai gpt"]],["NLP (spaCy, TF-IDF)",["nlp","spacy","tf-idf"]],["Machine learning",["machine learning","ml concepts"]]],
     "Languages & backend": [["Python",["python"]],["TypeScript / JavaScript",["typescript","javascript","node.js"]],["SQL",["sql"]],["FastAPI",["fastapi"]],["Node.js",["node.js"]],["REST APIs",["rest api"]],["Redis",["redis"]],["Auth0",["auth0"]]],
     "Cloud & DevOps": [["GCP",["google cloud","cloud run","cloud sql","vertex"]],["AWS",["aws"]],["Docker",["docker"]],["GitHub Actions & CI/CD",["github actions","ci/cd"]]],
     "Data": [["PostgreSQL",["postgresql"]],["BigQuery",["bigquery"]],["Snowflake",["snowflake"]],["SQL Server & Oracle",["sql server","oracle"]],["Power BI",["power bi"]],["pandas & scikit-learn",["pandas","scikit-learn"]]],
+    "Teaching & mentoring": [["Mentoring",["mentored"]],["Course content design",["course content"]],["Code & query review",["reviewed and evaluated"]]],
     "Testing & reliability": [["Guardrails",["guardrail","controlled, secure"]],["Integration testing",["integration test"]],["Validation & QA",["validation","qa"]],["Logging & monitoring",["logging","monitoring","health check","log analysis"]]]
   };
 
@@ -462,7 +505,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
       re.lastIndex = 0;
       if (re.test(b.textContent)) {
         n++; b.classList.add("lit");
-        orgs.add(b.closest(".role").querySelector(".org").textContent.replace(", India",""));
+        orgs.add(b.closest(".role").querySelector(".org").textContent);
         b.innerHTML = b.dataset.raw.replace(re, m => `<mark>${m}</mark>`);
       }
     });
