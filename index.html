@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ashwini Dubbewar — AI Engineer</title>
+<meta name="description" content="Ashwini Dubbewar, AI engineer building agentic AI, RAG systems and LLM evaluation with Claude, MCP, LangGraph and FastAPI.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔎</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F6F8; --surface:#FFFFFF; --ink:#18202C; --muted:#5A6474; --line:#D9DEE5;
+  --accent:#2B5F8A; --accent-soft:#E3ECF4; --mark:#FBE89A; --mark-ink:#18202C;
+  --sans:"Schibsted Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151C; --surface:#171E27; --ink:#E6EAF0; --muted:#98A3B3; --line:#2A3440;
+    --accent:#86B6E0; --accent-soft:#1C2A38; --mark:#6B5A17; --mark-ink:#FFF6CF;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151C; --surface:#171E27; --ink:#E6EAF0; --muted:#98A3B3; --line:#2A3440;
+  --accent:#86B6E0; --accent-soft:#1C2A38; --mark:#6B5A17; --mark-ink:#FFF6CF;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:1.0625rem; line-height:1.6; -webkit-font-smoothing:antialiased}
+a{color:var(--accent); text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
+mark{background:var(--mark); color:var(--mark-ink); border-radius:3px; padding:0 2px}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+
+/* Nav */
+.nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex; align-items:center; gap:24px; height:60px}
+.brand{font-weight:800; color:var(--ink); text-decoration:none; letter-spacing:-.02em; margin-right:auto}
+.nav-links{display:flex; gap:20px; font-size:.95rem}
+.nav-links a{color:var(--muted); text-decoration:none}
+.nav-links a:hover{color:var(--ink)}
+.icon-btn{background:none; border:1px solid var(--line); color:var(--ink); border-radius:8px; width:36px; height:36px; cursor:pointer; font-size:1rem; display:grid; place-items:center}
+@media (max-width:640px){.nav-links{display:none}}
+
+/* Hero */
+.hero{padding:72px 0 56px}
+.hero .wrap{display:grid; grid-template-columns:1fr 1.05fr; gap:56px; align-items:start}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr; gap:40px}}
+h1{font-size:clamp(2.6rem,6vw,4.4rem); line-height:1; letter-spacing:-.035em; font-weight:800; margin:0 0 20px}
+.lede{font-size:1.25rem; line-height:1.5; max-width:30ch; margin:0 0 20px}
+.sub{color:var(--muted); max-width:46ch; margin:0 0 28px}
+.actions{display:flex; flex-wrap:wrap; gap:12px}
+.btn{display:inline-flex; align-items:center; gap:8px; font:inherit; font-weight:500; font-size:.975rem; padding:10px 18px; border-radius:10px; border:1px solid var(--ink); background:var(--ink); color:var(--bg); text-decoration:none; cursor:pointer}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--ink)}
+
+/* Retrieval panel */
+.panel{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px}
+.panel h2{font-size:1.05rem; margin:0 0 4px; letter-spacing:-.01em}
+.panel .hint{color:var(--muted); font-size:.92rem; margin:0 0 16px}
+.query{display:flex; gap:8px; border:1px solid var(--line); border-radius:10px; padding:6px 6px 6px 14px; background:var(--bg)}
+.query:focus-within{border-color:var(--accent)}
+.query input{flex:1; min-width:0; border:0; background:transparent; color:var(--ink); font-family:var(--mono); font-size:.92rem; outline:none}
+.query button{font:inherit; font-size:.9rem; font-weight:500; border:0; border-radius:7px; padding:8px 14px; background:var(--accent); color:var(--surface); cursor:pointer}
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 18px}
+.chip{font:inherit; font-size:.85rem; padding:5px 11px; border-radius:999px; border:1px solid var(--line); background:transparent; color:var(--muted); cursor:pointer}
+.chip:hover{color:var(--ink); border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent-soft); color:var(--ink); border-color:var(--accent)}
+.status{font-size:.85rem; color:var(--muted); margin:0 0 10px; min-height:1.3em}
+.results{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+.hit{border-left:3px solid var(--accent); padding:4px 0 4px 14px; animation:in .35s ease both}
+.hit:nth-child(2){animation-delay:.07s} .hit:nth-child(3){animation-delay:.14s}
+@keyframes in{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){.hit{animation:none}}
+.hit-meta{display:flex; align-items:center; gap:10px; font-size:.8rem; color:var(--muted); margin-bottom:2px}
+.bar{flex:0 0 64px; height:4px; background:var(--line); border-radius:2px; overflow:hidden}
+.bar span{display:block; height:100%; background:var(--accent)}
+.hit p{margin:0; font-size:.95rem; line-height:1.5}
+
+/* Sections */
+section{padding:64px 0; border-top:1px solid var(--line)}
+.sec-head{display:grid; grid-template-columns:220px 1fr; gap:40px}
+@media (max-width:800px){.sec-head{grid-template-columns:1fr; gap:16px}}
+h2.sec{font-size:1.6rem; letter-spacing:-.025em; margin:0; line-height:1.2}
+.sec-note{color:var(--muted); font-size:.95rem; margin:8px 0 0; max-width:24ch}
+
+/* Timeline */
+.roles{list-style:none; margin:0; padding:0}
+.role{display:grid; grid-template-columns:150px 1fr; gap:24px; padding:0 0 36px; position:relative}
+.role:last-child{padding-bottom:0}
+@media (max-width:560px){.role{grid-template-columns:1fr; gap:4px}}
+.when{color:var(--muted); font-size:.92rem; padding-top:3px; font-variant-numeric:tabular-nums}
+.role h3{margin:0; font-size:1.2rem; letter-spacing:-.015em}
+.role .org{color:var(--muted); margin:0 0 10px}
+.role ul{margin:0; padding-left:18px; max-width:68ch}
+.role li{margin:0 0 6px; transition:opacity .2s}
+.dim .role li:not(.lit){opacity:.35}
+.dim .role:not(:has(.lit)) h3{opacity:.45}
+.now{display:inline-block; font-size:.75rem; font-weight:500; color:var(--accent); background:var(--accent-soft); border-radius:6px; padding:1px 8px; margin-left:8px; vertical-align:3px}
+
+/* Skills */
+.skill-groups{display:grid; gap:22px}
+.skill-group h3{font-size:1rem; margin:0 0 8px; color:var(--muted); font-weight:500}
+.skill-group .chips{margin:0}
+.skill-group .chip{color:var(--ink); font-size:.9rem; padding:6px 13px}
+.evidence{margin:18px 0 0; padding:12px 16px; border-radius:10px; background:var(--accent-soft); font-size:.95rem; display:none}
+.evidence.show{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+.evidence button{font:inherit; font-size:.9rem; background:none; border:0; color:var(--accent); cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0}
+
+/* Project */
+.project{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:28px; max-width:760px}
+.project h3{margin:0 0 6px; font-size:1.3rem; letter-spacing:-.015em}
+.project > p{margin:0 0 20px; color:var(--muted); max-width:60ch}
+.progress{display:grid; grid-template-columns:1fr 1fr; gap:20px}
+@media (max-width:560px){.progress{grid-template-columns:1fr}}
+.progress h4{margin:0 0 8px; font-size:.95rem}
+.progress ul{margin:0; padding:0; list-style:none}
+.progress li{padding:6px 0 6px 26px; position:relative; font-size:.95rem; border-bottom:1px dashed var(--line)}
+.progress li::before{content:""; position:absolute; left:2px; top:12px; width:12px; height:12px; border-radius:50%; border:2px solid var(--accent)}
+.progress .done li::before{background:var(--accent)}
+
+/* Education */
+.edu{list-style:none; margin:0; padding:0; display:grid; gap:18px; max-width:760px}
+.edu li{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-bottom:18px; border-bottom:1px solid var(--line)}
+.edu li:last-child{border-bottom:0}
+.edu strong{display:block; font-size:1.1rem}
+.edu span{color:var(--muted)}
+
+/* Contact */
+.contact h2{font-size:clamp(2rem,4.5vw,3.2rem); letter-spacing:-.03em; line-height:1.05; margin:0 0 16px; max-width:16ch}
+.contact p{color:var(--muted); max-width:52ch; margin:0 0 28px}
+.toast{font-size:.9rem; color:var(--accent); margin-left:4px; min-width:4em}
+footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#top">Ashwini Dubbewar</a>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#project">Project</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="icon-btn" id="themeBtn" aria-label="Switch color theme" title="Switch color theme">◐</button>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <h1>Ashwini Dubbewar</h1>
+      <p class="lede">AI engineer building agents, retrieval systems, and the evaluations that keep them honest.</p>
+      <p class="sub">Prompt &amp; Agentification Engineer at Vosyn. M.S. in Computer Science from CU Boulder, with two years of enterprise data work behind the AI.</p>
+      <div class="actions">
+        <a class="btn" href="Ashwini_Dubbewar_Resume.pdf" download>Download résumé</a>
+        <a class="btn ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="panel" role="search">
+      <h2>Ask my résumé</h2>
+      <p class="hint">Type a question. This runs the retrieval step of a RAG pipeline in your browser and returns the most relevant passages from my work.</p>
+      <form class="query" id="qform" autocomplete="off">
+        <label for="q" class="sr" style="position:absolute;left:-9999px">Question</label>
+        <input id="q" type="text" placeholder="e.g. How do you evaluate LLM outputs?">
+        <button type="submit">Search</button>
+      </form>
+      <div class="chips" id="suggest">
+        <button class="chip" type="button">How do you evaluate LLM outputs?</button>
+        <button class="chip" type="button">What have you shipped to production?</button>
+        <button class="chip" type="button">Agents and MCP</button>
+        <button class="chip" type="button">SQL and data pipelines</button>
+      </div>
+      <p class="status" id="status" aria-live="polite"></p>
+      <ol class="results" id="results"></ol>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="experience">
+  <div class="wrap sec-head">
+    <div>
+      <h2 class="sec">Experience</h2>
+      <p class="sec-note">From enterprise data in Mumbai to agentic AI in production.</p>
+    </div>
+    <ol class="roles" id="roles">
+      <li class="role">
+        <div class="when">Jun 2026 – now</div>
+        <div>
+          <h3>Prompt &amp; Agentification Engineer Intern <span class="now">Current</span></h3>
+          <p class="org">Vosyn</p>
+          <ul>
+            <li>Design and orchestrate LangGraph agent workflows with Claude and OpenAI GPT, connecting tool calls to Python, FastAPI, REST APIs, PostgreSQL, and Google Cloud Vertex AI for end-to-end retrieval, processing, and task-execution pipelines.</li>
+            <li>Developed an MQM-based LLM-as-a-Judge evaluation on the GEPA MQM Judge baseline, scoring agent outputs by error type, span, and severity with Claude Sonnet and Gemini Flash. Replaced single-score assessments and reduced errors by 15%.</li>
+            <li>Engineered reusable prompt workflows using RAG, few-shot prompting, and GEPA-based optimization, improving retrieval accuracy and reference grounding to reduce hallucinations.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
+        <div class="when">Sep 2025 – May 2026</div>
+        <div>
+          <h3>AI Engineer</h3>
+          <p class="org">Credible Data</p>
+          <ul>
+            <li>Built Credible Atlas, a natural-language analytics platform over 40+ datasets: an AI agent using Claude, MCP, and semantic-search retrieval with PostgreSQL and BigQuery turns plain-language questions into autonomous SQL, results, and charts.</li>
+            <li>Integrated the Claude Agent SDK into the Node.js backend with MCP tools and context so the agent runs data queries under controlled, secure execution, with access enforced through Auth0.</li>
+            <li>Deployed LLM inference services with Python, FastAPI, Docker, Cloud Run, Cloud SQL, and GitHub Actions CI/CD, cutting deployment overhead by 35%.</li>
+            <li>Implemented LLM guardrails, structured logging, health checks, and automated validation and integration tests.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
+        <div class="when">Jun – Aug 2025</div>
+        <div>
+          <h3>Technical Intern, Data Validation &amp; Reporting</h3>
+          <p class="org">Deloitte</p>
+          <ul>
+            <li>Built Python and SQL frameworks on Snowflake to automate validation, reconciliation, and reporting, cutting manual effort by 25%.</li>
+            <li>Built fault-tolerant reconciliation and schema-validation pipelines with edge-case checks and exception handling.</li>
+            <li>Root-caused data defects with QA; supported UAT, defect tracking in Azure DevOps and Jira, and Power BI dashboards.</li>
+          </ul>
+        </div>
+      </li>
+      <li class="role">
+        <div class="when">Sep 2022 – May 2024</div>
+        <div>
+          <h3>Data Analyst, Enterprise Data &amp; CRM Analytics</h3>
+          <p class="org">BusinessNext, India</p>
+          <ul>
+            <li>Analyzed enterprise CRM datasets across 10+ business domains using SQL Server, Oracle, and MDM to support data migration and operational reporting.</li>
+            <li>Developed automated data transformation and reporting pipelines using SQL, stored procedures, and relational databases, improving reporting efficiency and application performance by 40%.</li>
+            <li>Established data validation, monitoring, and quality assurance workflows using SQL and production log analysis, improving data reliability across enterprise reporting systems.</li>
+          </ul>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap sec-head">
+    <div>
+      <h2 class="sec">Skills</h2>
+      <p class="sec-note">Pick a skill to see where I've used it.</p>
+    </div>
+    <div>
+      <div class="skill-groups" id="skillGroups"></div>
+      <div class="evidence" id="evidence" aria-live="polite">
+        <span id="evidenceText"></span>
+        <button type="button" id="jumpBtn">Show in experience</button>
+        <button type="button" id="clearBtn">Clear</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="project">
+  <div class="wrap sec-head">
+    <div>
+      <h2 class="sec">Project</h2>
+      <p class="sec-note">What I'm building on my own time.</p>
+    </div>
+    <article class="project">
+      <h3>AI Operations Analyst</h3>
+      <p>An agentic AI platform built around RAG, agent orchestration, MCP-style tools, and PostgreSQL with pgvector.</p>
+      <div class="progress">
+        <div class="done">
+          <h4>Working now</h4>
+          <ul><li>FastAPI backend</li><li>Health-check API</li><li>PostgreSQL + pgvector store</li></ul>
+        </div>
+        <div>
+          <h4>Building next</h4>
+          <ul><li>Guardrails</li><li>Evaluation layer</li><li>Docker and CI/CD</li></ul>
+        </div>
+      </div>
+      <p style="margin:20px 0 0"><a href="https://github.com/Ashwini-08">View the code on GitHub</a></p>
+    </article>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap sec-head">
+    <div><h2 class="sec">Education</h2></div>
+    <ul class="edu">
+      <li><div><strong>M.S., Computer Science</strong><span>University of Colorado Boulder, GPA 3.8</span></div><span>2024 – 2026</span></li>
+      <li><div><strong>B.E., Information Technology</strong><span>University of Mumbai, GPA 3.7</span></div><span>2018 – 2022</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <h2>Building something with LLMs? Let's talk.</h2>
+    <p>I'm open to AI engineering roles focused on agents, retrieval, and evaluation. The fastest way to reach me is email.</p>
+    <div class="actions">
+      <a class="btn" href="mailto:ashwinisd.mail@gmail.com">Email me</a>
+      <button class="btn ghost" type="button" id="copyBtn">Copy email address</button>
+      <a class="btn ghost" href="https://www.linkedin.com/in/ashwinidubbewar/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn ghost" href="https://github.com/Ashwini-08" target="_blank" rel="noopener">GitHub</a>
+      <span class="toast" id="toast" aria-live="polite"></span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">© 2026 Ashwini Dubbewar</div></footer>
+
+<script>
+(() => {
+  /* ---------- Theme toggle ---------- */
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("theme"); if (t) root.dataset.theme = t; } catch(e){}
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+    root.dataset.theme = dark ? "light" : "dark";
+    try { localStorage.setItem("theme", root.dataset.theme); } catch(e){}
+  });
+
+  /* ---------- Corpus: one chunk per résumé passage ---------- */
+  const chunks = [];
+  document.querySelectorAll(".role").forEach(r => {
+    const src = r.querySelector(".org").textContent + ", " + r.querySelector(".when").textContent;
+    r.querySelectorAll("li").forEach(li => chunks.push({ src, text: li.textContent.trim() }));
+  });
+  chunks.push(
+    { src: "Summary", text: "M.S. Computer Science graduate from CU Boulder building production-grade agentic and RAG systems with Claude, MCP, LangGraph, and FastAPI on GCP, on a foundation of enterprise data and SQL. Focused on evaluation, guardrails, and reliability of LLM systems." },
+    { src: "Project: AI Operations Analyst", text: "Building an agentic AI platform around RAG, agent orchestration, MCP-style tools, and PostgreSQL with pgvector, with a working FastAPI backend and health-check API. Next: guardrails, evaluation, and Docker and CI/CD for production readiness." },
+    { src: "Skills", text: "Cloud and DevOps: GCP (Cloud Run, Cloud SQL, Vertex AI), AWS (EC2, S3, RDS, Lambda, ECS), Docker, GitHub Actions, CI/CD." },
+    { src: "Skills", text: "Languages and backend: Python, TypeScript, JavaScript, SQL, FastAPI, Node.js, REST APIs, async processing, Redis, Auth0." },
+    { src: "Education", text: "M.S. in Computer Science, University of Colorado Boulder, GPA 3.8 (2024 to 2026). B.E. in Information Technology, University of Mumbai, GPA 3.7 (2018 to 2022)." }
+  );
+
+  const STOP = new Set("a an the and or of to in on for with by at from is are was were be been do does did you your i me my how what which who where when why have has had it its this that these those can could would should about any some tell show us our as into".split(" "));
+  const norm = w => {
+    w = w.toLowerCase();
+    if (w.length > 5 && w.endsWith("ing")) return w.slice(0, -3);
+    if (w.length > 4 && w.endsWith("ed")) return w.slice(0, -2);
+    if (w.length > 3 && w.endsWith("s") && !w.endsWith("ss")) return w.slice(0, -1);
+    return w;
+  };
+  const tokens = s => (s.toLowerCase().match(/[a-z0-9+#]+/g) || []).map(norm).filter(t => !STOP.has(t) && t.length > 1);
+
+  // Query expansion: related terms get partial weight
+  const EXPAND = {
+    evaluate: ["evaluation","judge","mqm","score","error","severity","test","validation"],
+    evaluat: ["evaluation","judge","mqm","score","error","severity","test","validation"],
+    evaluation: ["judge","mqm","score","error","severity","test"],
+    eval: ["evaluation","judge","mqm","score"],
+    judge: ["mqm","evaluation","score"],
+    llm: ["claude","gpt","gemini","llm"],
+    output: ["score","judge","evaluation"],
+    ship: ["deploy","production","cloud","docker","ci","cd"],
+    shipp: ["deploy","production","cloud","docker","ci","cd","built"],
+    production: ["deploy","docker","cloud","ci","cd","guardrail","health"],
+    deploy: ["docker","cloud","run","ci","cd","github","action"],
+    agent: ["agentic","langgraph","orchestration","mcp","tool","claude"],
+    agentic: ["agent","langgraph","orchestration","mcp"],
+    mcp: ["tool","context","agent","claude"],
+    rag: ["retrieval","semantic","embedding","pgvector","grounding"],
+    retrieval: ["rag","semantic","pgvector","grounding"],
+    hallucination: ["grounding","reference","retrieval"],
+    sql: ["postgresql","bigquery","snowflake","oracle","server","stored","procedure"],
+    data: ["dataset","sql","pipeline","reconciliation","validation"],
+    pipeline: ["pipeline","workflow","transformation","reconciliation"],
+    cloud: ["gcp","aws","run","vertex","docker"],
+    prompt: ["few","shot","gepa","prompting"],
+    test: ["testing","validation","integration","qa","uat"],
+    python: ["fastapi","panda"],
+    reliability: ["guardrail","logging","health","monitoring","validation"],
+    guardrail: ["guardrail","secure","controlled","validation"]
+  };
+
+  const docs = chunks.map(c => { const t = tokens(c.text); const tf = {}; t.forEach(x => tf[x] = (tf[x]||0)+1); return { ...c, tf, len: t.length }; });
+  const df = {}; docs.forEach(d => Object.keys(d.tf).forEach(t => df[t] = (df[t]||0)+1));
+  const N = docs.length;
+  const idf = t => Math.log(1 + N / (df[t] || N));
+
+  function search(q) {
+    const qt = [...new Set(tokens(q))];
+    const weights = {};
+    qt.forEach(t => { weights[t] = Math.max(weights[t]||0, 1); (EXPAND[t]||[]).map(norm).forEach(e => weights[e] = Math.max(weights[e]||0, .5)); });
+    return docs.map(d => {
+      let s = 0; const hit = new Set();
+      for (const [t, w] of Object.entries(weights)) if (d.tf[t]) { s += w * idf(t) * (1 + Math.log(d.tf[t])); hit.add(t); }
+      return { d, s: s / Math.sqrt(Math.max(d.len, 8)), hit };
+    }).filter(r => r.s > 0).sort((a,b) => b.s - a.s).slice(0, 3);
+  }
+
+  const highlight = (text, hit) => text.replace(/[A-Za-z0-9+#]+/g, w => hit.has(norm(w)) ? `<mark>${w}</mark>` : w);
+
+  const qInput = document.getElementById("q"), results = document.getElementById("results"), status = document.getElementById("status");
+  const chips = [...document.querySelectorAll("#suggest .chip")];
+
+  function run(q) {
+    chips.forEach(c => c.setAttribute("aria-pressed", String(c.textContent === q)));
+    results.innerHTML = "";
+    if (!q.trim()) { status.textContent = ""; return; }
+    const hits = search(q);
+    if (!hits.length) { status.textContent = "No passages matched. Try “evaluation”, “SQL”, or “deployment”."; return; }
+    status.textContent = `Top ${hits.length} of ${N} passages, ranked by relevance`;
+    const top = hits[0].s;
+    hits.forEach(h => {
+      const li = document.createElement("li");
+      li.className = "hit";
+      li.innerHTML = `<div class="hit-meta"><span class="bar"><span style="width:${Math.round(h.s/top*100)}%"></span></span>${h.d.src}</div><p>${highlight(h.d.text, h.hit)}</p>`;
+      results.appendChild(li);
+    });
+  }
+
+  document.getElementById("qform").addEventListener("submit", e => { e.preventDefault(); run(qInput.value); });
+  chips.forEach(c => c.addEventListener("click", () => { qInput.value = c.textContent; run(c.textContent); }));
+
+  // One orchestrated moment: type the first sample question on load
+  const sample = chips[0].textContent;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { qInput.value = sample; run(sample); }
+  else {
+    let i = 0;
+    setTimeout(function type() {
+      if (document.activeElement === qInput) return; // visitor started typing, step aside
+      qInput.value = sample.slice(0, ++i);
+      if (i < sample.length) setTimeout(type, 38); else run(sample);
+    }, 700);
+  }
+
+  /* ---------- Skills → evidence in experience ---------- */
+  const SKILLS = {
+    "AI & LLM": [["Claude",["claude"]],["Claude Agent SDK",["claude agent sdk"]],["MCP",["mcp"]],["LangGraph",["langgraph"]],["LangChain",["langchain"]],["RAG",["rag","retrieval"]],["Semantic search & pgvector",["semantic","pgvector"]],["Prompt engineering",["prompt","few-shot"]],["GEPA",["gepa"]],["LLM-as-a-Judge (MQM)",["llm-as-a-judge","mqm"]],["Vertex AI",["vertex ai"]],["Gemini",["gemini"]],["OpenAI GPT",["openai gpt"]]],
+    "Languages & backend": [["Python",["python"]],["TypeScript / JavaScript",["typescript","javascript","node.js"]],["SQL",["sql"]],["FastAPI",["fastapi"]],["Node.js",["node.js"]],["REST APIs",["rest api"]],["Redis",["redis"]],["Auth0",["auth0"]]],
+    "Cloud & DevOps": [["GCP",["google cloud","cloud run","cloud sql","vertex"]],["AWS",["aws"]],["Docker",["docker"]],["GitHub Actions & CI/CD",["github actions","ci/cd"]]],
+    "Data": [["PostgreSQL",["postgresql"]],["BigQuery",["bigquery"]],["Snowflake",["snowflake"]],["SQL Server & Oracle",["sql server","oracle"]],["Power BI",["power bi"]],["pandas & scikit-learn",["pandas","scikit-learn"]]],
+    "Testing & reliability": [["Guardrails",["guardrail","controlled, secure"]],["Integration testing",["integration test"]],["Validation & QA",["validation","qa"]],["Logging & monitoring",["logging","monitoring","health check","log analysis"]]]
+  };
+
+  const groupsEl = document.getElementById("skillGroups"), rolesEl = document.getElementById("roles");
+  const evidence = document.getElementById("evidence"), evText = document.getElementById("evidenceText");
+  const bullets = [...rolesEl.querySelectorAll("li.role li")];
+  bullets.forEach(b => b.dataset.raw = b.innerHTML);
+  let active = null;
+
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&");
+  function clearSkill() {
+    active && active.setAttribute("aria-pressed","false"); active = null;
+    rolesEl.parentElement.classList.remove("dim");
+    bullets.forEach(b => { b.innerHTML = b.dataset.raw; b.classList.remove("lit"); });
+    evidence.classList.remove("show");
+  }
+  function pickSkill(btn, name, terms) {
+    if (active === btn) return clearSkill();
+    clearSkill(); active = btn; btn.setAttribute("aria-pressed","true");
+    const re = new RegExp(terms.map(esc).join("|"), "gi");
+    const orgs = new Set(); let n = 0;
+    bullets.forEach(b => {
+      re.lastIndex = 0;
+      if (re.test(b.textContent)) {
+        n++; b.classList.add("lit");
+        orgs.add(b.closest(".role").querySelector(".org").textContent.replace(", India",""));
+        b.innerHTML = b.dataset.raw.replace(re, m => `<mark>${m}</mark>`);
+      }
+    });
+    evidence.classList.add("show");
+    if (n) {
+      rolesEl.parentElement.classList.add("dim");
+      evText.textContent = `${name}: used in ${n} ${n === 1 ? "project" : "projects"} at ${[...orgs].join(", ")}.`;
+      document.getElementById("jumpBtn").hidden = false;
+    } else {
+      evText.textContent = `${name}: part of my toolkit, beyond the highlights listed above.`;
+      document.getElementById("jumpBtn").hidden = true;
+    }
+  }
+
+  for (const [group, list] of Object.entries(SKILLS)) {
+    const g = document.createElement("div"); g.className = "skill-group";
+    g.innerHTML = `<h3>${group}</h3><div class="chips"></div>`;
+    list.forEach(([name, terms]) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "chip"; b.textContent = name; b.setAttribute("aria-pressed","false");
+      b.addEventListener("click", () => pickSkill(b, name, terms));
+      g.querySelector(".chips").appendChild(b);
+    });
+    groupsEl.appendChild(g);
+  }
+  document.getElementById("clearBtn").addEventListener("click", clearSkill);
+  document.getElementById("jumpBtn").addEventListener("click", () => {
+    const first = rolesEl.querySelector("li.lit"); first && first.scrollIntoView({ block: "center" });
+  });
+
+  /* ---------- Copy email ---------- */
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    const toast = document.getElementById("toast");
+    try { await navigator.clipboard.writeText("ashwinisd.mail@gmail.com"); toast.textContent = "Copied"; }
+    catch(e) { toast.textContent = "ashwinisd.mail@gmail.com"; }
+    setTimeout(() => toast.textContent = "", 2500);
+  });
+})();
+</script>
+</body>
+</html>
