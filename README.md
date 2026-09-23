@@ -1,4 +1,4 @@
-# Ashwini Dubbewar — Portfolio
+# Ashwini Dubbewar - Portfolio
 
 Personal portfolio site for Ashwini Dubbewar, AI Engineer (agentic AI, RAG, LLM evaluation).
 
