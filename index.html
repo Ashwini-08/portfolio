@@ -167,6 +167,24 @@ h2.sec{font-size:1.6rem; letter-spacing:-.025em; margin:0; line-height:1.2}
   .proj summary .date{grid-row:1; font-size:.82rem}
 }
 
+/* About */
+.about-body{max-width:64ch}
+.about-body p{margin:0 0 16px}
+.about-body p:last-child{margin-bottom:0}
+.about-lead{font-size:1.25rem; line-height:1.5; letter-spacing:-.01em}
+
+/* Publications */
+.pubs{list-style:none; margin:0; padding:0; max-width:760px}
+.pub h3{margin:0 0 6px; font-size:1.15rem; line-height:1.35; letter-spacing:-.01em}
+.pub h3 a{color:var(--ink); text-decoration:none}
+.pub h3 a:hover{color:var(--accent); text-decoration:underline}
+.pub p{margin:0}
+.pub-authors{color:var(--muted); font-size:.95rem}
+.pub-authors strong{color:var(--ink); font-weight:600}
+.pub-venue{font-size:.95rem; font-style:italic; margin-top:2px !important}
+.pub-note{margin-top:10px !important; max-width:62ch}
+.pub-link{margin-top:10px !important; font-size:.95rem}
+
 /* Education */
 .edu{list-style:none; margin:0; padding:0; display:grid; gap:18px; max-width:760px}
 .edu li{display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-bottom:18px; border-bottom:1px solid var(--line)}
@@ -187,6 +205,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
   <div class="wrap">
     <a class="brand" href="#top">Ashwini Dubbewar</a>
     <div class="nav-links">
+      <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -230,6 +249,17 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
 </header>
 
 <main>
+<section id="about">
+  <div class="wrap sec-head">
+    <div><h2 class="sec">About</h2></div>
+    <div class="about-body">
+      <p class="about-lead">I build AI systems people can trust with real work: agents that query data, retrieval that grounds their answers, and evaluations that catch mistakes before users do.</p>
+      <p>I started in data. Two years as a data analyst at BusinessNext in Mumbai taught me how enterprise data actually behaves, and why validation matters more than any single model. My first taste of research came earlier, as an undergraduate, when my team's work on personality prediction with deep learning was published at an IEEE conference.</p>
+      <p>After a master's in computer science at CU Boulder, I've spent my time turning that foundation into production AI: a natural-language analytics agent at Credible Data, and MQM-based LLM-as-a-Judge evaluation at Vosyn. I care most about the unglamorous parts that make AI dependable, like guardrails, testing, and clear measurement.</p>
+    </div>
+  </div>
+</section>
+
 <section id="experience">
   <div class="wrap sec-head">
     <div>
@@ -434,13 +464,28 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
             <ul>
               <li>Built Naive Bayes, Random Forest, and BERT-based models to classify people into the 16 MBTI personality types from behavioral patterns in historical employee datasets.</li>
               <li>Developed the models in Python using natural language processing techniques.</li>
-              <li>Published the findings at the IEEE 2nd Asian Conference on Innovation in Technology.</li>
+              <li>Published the findings at the IEEE 2nd Asian Conference on Innovation in Technology. <a href="#publications">See the paper</a></li>
             </ul>
             <ul class="tags"><li>Python</li><li>NLP</li><li>BERT</li><li>Naive Bayes</li><li>Random Forest</li><li>Machine Learning</li></ul>
           </div>
         </details></li>
       </ul>
     </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap sec-head">
+    <div><h2 class="sec">Publications</h2></div>
+    <ul class="pubs">
+      <li class="pub">
+        <h3><a href="https://doi.org/10.1109/ASIANCON55314.2022.9909077" target="_blank" rel="noopener">Myers Briggs Type Indicator (MBTI): Personality Prediction using Deep Learning</a></h3>
+        <p class="pub-authors">H. Naik, S. Dedhia, <strong>A. Dubbewar</strong>, M. Joshi, V. Patil</p>
+        <p class="pub-venue">2022 2nd Asian Conference on Innovation in Technology (ASIANCON), IEEE, 2022</p>
+        <p class="pub-note">Compares Naive Bayes, Random Forest, and BERT-based models for classifying the 16 MBTI personality types. Cited in later personality-prediction research.</p>
+        <p class="pub-link"><a href="https://doi.org/10.1109/ASIANCON55314.2022.9909077" target="_blank" rel="noopener">Read on IEEE Xplore</a></p>
+      </li>
+    </ul>
   </div>
 </section>
 
@@ -494,6 +539,8 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     const items = [...pr.querySelectorAll(".proj-body li, .proj-body > p")].map(x => x.textContent.trim());
     [one, ...items].forEach(t => chunks.push({ src, text: t }));
   });
+  document.querySelectorAll(".about-body p").forEach(el => chunks.push({ src: "About", text: el.textContent.trim() }));
+  document.querySelectorAll(".pub").forEach(el => chunks.push({ src: "Publication", text: "Published paper: " + el.querySelector("h3").textContent + ". " + el.querySelector(".pub-venue").textContent + ". " + el.querySelector(".pub-note").textContent }));
   chunks.push(
     { src: "Summary", text: "M.S. Computer Science graduate from CU Boulder building production-grade agentic and RAG systems with Claude, MCP, LangGraph, and FastAPI on GCP, on a foundation of enterprise data and SQL. Focused on evaluation, guardrails, and reliability of LLM systems." },
     { src: "Education", text: "M.S. in Computer Science, University of Colorado Boulder, GPA 3.8 (2024 to 2026). B.E. in Information Technology, University of Mumbai, GPA 3.7 (2018 to 2022)." }
@@ -612,6 +659,10 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     python: ["fastapi","panda"],
     reliability: ["guardrail","logging","health","monitoring","validation"],
     guardrail: ["guardrail","secure","controlled","validation"],
+    paper: ["published","publication","ieee","research","conference"],
+    publication: ["published","ieee","paper","research","conference"],
+    research: ["published","ieee","paper","publication"],
+    about: ["started","data","build"],
     auth: ["auth0","authentication","authorization","access","openfga"],
     security: ["auth0","authentication","authorization","access","openfga","secure","guardrail"],
     access: ["auth0","authentication","authorization","openfga","control"],
@@ -779,7 +830,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
   /* ---------- Reveal content as the visitor scrolls ---------- */
   const targets = document.querySelectorAll([
     "main .sec-head > div:first-child", ".role", ".jd", ".skill-group",
-    ".project", ".proj-list > li", ".edu li", "#contact .wrap > *"
+    ".about-body > p", ".pub", ".project", ".proj-list > li", ".edu li", "#contact .wrap > *"
   ].join(","));
   if (!("IntersectionObserver" in window)) targets.forEach(t => t.classList.add("reveal", "in"));
   else {
