@@ -6,6 +6,7 @@
 <title>Ashwini Dubbewar — AI Engineer</title>
 <meta name="description" content="Ashwini Dubbewar, AI engineer building agentic AI, RAG systems and LLM evaluation with Claude, MCP, LangGraph and FastAPI.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔎</text></svg>">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,6 +37,11 @@ a{color:var(--accent); text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px}
 mark{background:var(--mark); color:var(--mark-ink); border-radius:3px; padding:0 2px}
 .wrap{max-width:1120px; margin:0 auto; padding:0 24px}
+
+/* Scroll reveal */
+.js .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1)}
+.js .reveal.in{opacity:1; transform:none}
+@media (prefers-reduced-motion: reduce){.js .reveal{opacity:1; transform:none; transition:none}}
 
 /* Nav */
 .nav{position:sticky; top:env(safe-area-inset-top,0px); z-index:10; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
@@ -125,17 +131,41 @@ h2.sec{font-size:1.6rem; letter-spacing:-.025em; margin:0; line-height:1.2}
 .jd-result:empty{display:none}
 .jd-result button{font:inherit; font-size:.9rem; background:none; border:0; color:var(--accent); cursor:pointer; text-decoration:underline; text-underline-offset:3px; padding:0}
 
-/* Project */
-.project{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:28px; max-width:760px}
-.project h3{margin:0 0 6px; font-size:1.3rem; letter-spacing:-.015em}
-.project > p{margin:0 0 20px; color:var(--muted); max-width:60ch}
-.progress{display:grid; grid-template-columns:1fr 1fr; gap:20px}
-@media (max-width:560px){.progress{grid-template-columns:1fr}}
-.progress h4{margin:0 0 8px; font-size:.95rem}
-.progress ul{margin:0; padding:0; list-style:none}
-.progress li{padding:6px 0 6px 26px; position:relative; font-size:.95rem; border-bottom:1px dashed var(--line)}
-.progress li::before{content:""; position:absolute; left:2px; top:12px; width:12px; height:12px; border-radius:50%; border:2px solid var(--accent)}
-.progress .done li::before{background:var(--accent)}
+/* Projects */
+.project{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:24px 26px; max-width:760px}
+.proj-top{display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap}
+.project h3{margin:0; font-size:1.25rem; letter-spacing:-.015em}
+.project .one{margin:8px 0 14px; max-width:62ch}
+.date{color:var(--muted); font-size:.9rem; font-variant-numeric:tabular-nums; white-space:nowrap}
+.tags{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px}
+.tags li{font-size:.8rem; color:var(--muted); background:var(--bg); border-radius:6px; padding:2px 8px}
+.more{margin-top:14px}
+.more summary{cursor:pointer; color:var(--accent); font-weight:500; font-size:.95rem; list-style:none; display:inline-flex; gap:6px; align-items:center}
+.more summary::-webkit-details-marker{display:none}
+.more summary::after{content:"+"}
+.more[open] summary::after{content:"\2013"}
+.more .proj-body{padding-top:10px}
+.proj-body p{margin:0 0 10px; max-width:66ch}
+.proj-body{font-size:.95rem}
+.proj-body > ul:not(.tags){margin:0 0 12px; padding-left:18px; max-width:66ch; list-style:disc}
+.proj-body li{margin:0 0 6px}
+.proj-link{margin:14px 0 0; font-size:.95rem}
+.proj-list{list-style:none; margin:20px 0 0; padding:0; max-width:760px}
+.proj{border-bottom:1px solid var(--line)}
+.proj-list > li:first-child .proj{border-top:1px solid var(--line)}
+.proj summary{list-style:none; cursor:pointer; display:grid; grid-template-columns:1fr auto; column-gap:20px; row-gap:2px; padding:16px 4px}
+.proj summary::-webkit-details-marker{display:none}
+.proj summary h3{margin:0; font-size:1.05rem; letter-spacing:-.01em; grid-column:1; grid-row:1}
+.proj summary .date{grid-column:2; grid-row:1; justify-self:end}
+.proj summary .one{grid-column:1; grid-row:2; margin:0; color:var(--muted); font-size:.95rem; max-width:62ch}
+.proj summary::after{content:"+"; grid-column:2; grid-row:2; justify-self:end; color:var(--muted); font-size:1.2rem; line-height:1.2}
+.proj[open] summary::after{content:"\2013"}
+.proj summary:hover h3{color:var(--accent)}
+.proj .proj-body{padding:0 4px 18px}
+@media (max-width:560px){
+  .proj summary{grid-template-columns:1fr auto}
+  .proj summary .date{grid-row:1; font-size:.82rem}
+}
 
 /* Education */
 .edu{list-style:none; margin:0; padding:0; display:grid; gap:18px; max-width:760px}
@@ -159,7 +189,7 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     <div class="nav-links">
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
-      <a href="#project">Project</a>
+      <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
     <button class="icon-btn" id="themeBtn" aria-label="Switch color theme" title="Switch color theme">◐</button>
@@ -318,27 +348,99 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
   </div>
 </section>
 
-<section id="project">
+<section id="projects">
   <div class="wrap sec-head">
     <div>
-      <h2 class="sec">Project</h2>
-      <p class="sec-note">What I'm building on my own time.</p>
+      <h2 class="sec">Projects</h2>
+      <p class="sec-note">What I've built in school and on my own time. Open any project for details.</p>
     </div>
-    <article class="project">
-      <h3>AI Operations Analyst</h3>
-      <p>An agentic AI platform built around RAG, agent orchestration, MCP-style tools, and PostgreSQL with pgvector.</p>
-      <div class="progress">
-        <div class="done">
-          <h4>Working now</h4>
-          <ul><li>FastAPI backend</li><li>Health-check API</li><li>PostgreSQL + pgvector store</li></ul>
+    <div>
+      <article class="project proj-item" data-title="AI Operations Analyst">
+        <div class="proj-top">
+          <h3>AI Operations Analyst <span class="now">In progress</span></h3>
+          <span class="date">Jun 2026 – now</span>
         </div>
-        <div>
-          <h4>Building next</h4>
-          <ul><li>Guardrails</li><li>Evaluation layer</li><li>Docker and CI/CD</li></ul>
-        </div>
-      </div>
-      <p style="margin:20px 0 0"><a href="https://github.com/Ashwini-08">View the code on GitHub</a></p>
-    </article>
+        <p class="one">An AIOps platform that investigates operational incidents and business anomalies using RAG, agentic workflows, and enterprise knowledge retrieval.</p>
+        <ul class="tags"><li>Python</li><li>FastAPI</li><li>PostgreSQL</li><li>pgvector</li><li>LangGraph</li><li>MCP</li><li>Docker</li><li>OpenAI &amp; Anthropic APIs</li><li>GitHub Actions</li></ul>
+        <details class="more">
+          <summary>How it works</summary>
+          <div class="proj-body">
+            <p>The system analyzes alerts, logs, operational data, and internal documentation to identify likely root causes, recommend remediation steps, and generate incident summaries. It also automates follow-up work like ticket creation, team notifications, and operational reporting, reducing manual investigation effort.</p>
+            <ul>
+              <li>Agentic workflows for automated incident investigation and root cause analysis</li>
+              <li>Semantic search and knowledge retrieval using vector embeddings</li>
+              <li>Guardrails and evaluation frameworks for reliability and response quality</li>
+              <li>Containerized deployment and CI/CD automation</li>
+              <li>Event-driven architecture for alert monitoring and operational intelligence</li>
+            </ul>
+          </div>
+        </details>
+        <p class="proj-link"><a href="https://github.com/Ashwini-08" target="_blank" rel="noopener">View the code on GitHub</a></p>
+      </article>
+
+      <ul class="proj-list">
+        <li><details class="proj proj-item" data-title="NeuroFit.AI">
+          <summary>
+            <h3>NeuroFit.AI</h3>
+            <span class="date">Jan – May 2025</span>
+            <p class="one">A multi-agent wellness assistant that routes health questions to specialized agents and grounds its answers with RAG.</p>
+          </summary>
+          <div class="proj-body">
+            <ul>
+              <li>Built a modular multi-agent system in Langflow with an LLM-based query classifier (Ollama) that routes wellness queries to specialized agents, using tools like a calculator, retriever, and summarizer.</li>
+              <li>Integrated retrieval-augmented generation with Astra DB for personalized health recommendations, and shipped a Streamlit UI with session memory and async execution.</li>
+            </ul>
+            <ul class="tags"><li>Langflow</li><li>Ollama</li><li>RAG</li><li>Astra DB</li><li>Streamlit</li><li>University of Colorado Boulder</li></ul>
+          </div>
+        </details></li>
+
+        <li><details class="proj proj-item" data-title="Graph-Driven Course Recommender">
+          <summary>
+            <h3>Graph-Driven Course Recommender</h3>
+            <span class="date">Aug – Dec 2024</span>
+            <p class="one">Personalized online course suggestions built from user interaction graphs in Neo4j.</p>
+          </summary>
+          <div class="proj-body">
+            <ul>
+              <li>Designed a recommendation system that uses Neo4j and Cypher queries to analyze user interaction graphs and suggest courses based on behavior and preferences.</li>
+              <li>Deployed the application on Google Cloud Platform and integrated Amazon S3 for data storage and retrieval in the data processing pipeline.</li>
+            </ul>
+            <ul class="tags"><li>Neo4j</li><li>Cypher</li><li>React.js</li><li>GCP</li><li>Amazon S3</li><li>University of Colorado Boulder</li></ul>
+          </div>
+        </details></li>
+
+        <li><details class="proj proj-item" data-title="Mutual Funds Sector-wise Analysis">
+          <summary>
+            <h3>Mutual Funds Sector-wise Analysis</h3>
+            <span class="date">Aug – Dec 2024</span>
+            <p class="one">Clustering and classification of mutual fund sectors to support risk assessment and portfolio allocation.</p>
+          </summary>
+          <div class="proj-body">
+            <ul>
+              <li>Used K-means clustering to identify investment patterns across mutual fund sectors.</li>
+              <li>Classified funds by performance metrics with Decision Tree and Random Forest models, and built predictive models for Beta and RSI.</li>
+            </ul>
+            <ul class="tags"><li>Python</li><li>K-means</li><li>Random Forest</li><li>Decision Trees</li><li>Machine Learning</li><li>Data Mining</li></ul>
+          </div>
+        </details></li>
+
+        <li><details class="proj proj-item" data-title="Personality Predictors">
+          <summary>
+            <h3>Personality Predictors <span class="now">Published, IEEE</span></h3>
+            <span class="date">Aug 2020 – May 2022</span>
+            <p class="one">Machine learning models that predict MBTI personality types, from Naive Bayes to a BERT-based model.</p>
+          </summary>
+          <div class="proj-body">
+            <ul>
+              <li>Built Naive Bayes, Random Forest, and BERT-based models to classify people into the 16 MBTI personality types from behavioral patterns in historical employee datasets.</li>
+              <li>Developed the models in Python using natural language processing techniques.</li>
+              <li>Published the findings at the IEEE 2nd Asian Conference on Innovation in Technology.</li>
+            </ul>
+            <ul class="tags"><li>Python</li><li>NLP</li><li>BERT</li><li>Naive Bayes</li><li>Random Forest</li><li>Machine Learning</li></ul>
+          </div>
+        </details></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -386,9 +488,14 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     const src = r.querySelector(".org").textContent + ", " + r.querySelector(".when").textContent;
     r.querySelectorAll("li").forEach(li => chunks.push({ src, text: li.textContent.trim() }));
   });
+  document.querySelectorAll(".proj-item").forEach(pr => {
+    const src = "Project: " + pr.dataset.title;
+    const one = pr.querySelector(".one").textContent.trim();
+    const items = [...pr.querySelectorAll(".proj-body li, .proj-body > p")].map(x => x.textContent.trim());
+    [one, ...items].forEach(t => chunks.push({ src, text: t }));
+  });
   chunks.push(
     { src: "Summary", text: "M.S. Computer Science graduate from CU Boulder building production-grade agentic and RAG systems with Claude, MCP, LangGraph, and FastAPI on GCP, on a foundation of enterprise data and SQL. Focused on evaluation, guardrails, and reliability of LLM systems." },
-    { src: "Project: AI Operations Analyst", text: "Building an agentic AI platform around RAG, agent orchestration, MCP-style tools, and PostgreSQL with pgvector, with a working FastAPI backend and health-check API. Next: guardrails, evaluation, and Docker and CI/CD for production readiness." },
     { src: "Education", text: "M.S. in Computer Science, University of Colorado Boulder, GPA 3.8 (2024 to 2026). B.E. in Information Technology, University of Mumbai, GPA 3.7 (2018 to 2022)." }
   );
 
@@ -668,6 +775,26 @@ footer{padding:28px 0 40px; color:var(--muted); font-size:.85rem; border-top:1px
     selected.clear(); jdMatches.forEach(c => selected.add(c)); render();
     evidence.scrollIntoView({ block: "nearest" });
   });
+
+  /* ---------- Reveal content as the visitor scrolls ---------- */
+  const targets = document.querySelectorAll([
+    "main .sec-head > div:first-child", ".role", ".jd", ".skill-group",
+    ".project", ".proj-list > li", ".edu li", "#contact .wrap > *"
+  ].join(","));
+  if (!("IntersectionObserver" in window)) targets.forEach(t => t.classList.add("reveal", "in"));
+  else {
+    const io = new IntersectionObserver(entries => {
+      entries.filter(e => e.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+        .forEach((e, i) => {
+          e.target.style.transitionDelay = Math.min(i, 5) * 80 + "ms";
+          e.target.classList.add("in");
+          e.target.addEventListener("transitionend", () => e.target.style.transitionDelay = "", { once: true });
+          io.unobserve(e.target);
+        });
+    }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+    targets.forEach(t => { t.classList.add("reveal"); io.observe(t); });
+  }
 
   /* ---------- Copy email ---------- */
   document.getElementById("copyBtn").addEventListener("click", async () => {
